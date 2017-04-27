@@ -14,11 +14,21 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 }
 
 func parser(s []int) *ListNode {
-
+    var out, head, tail ListNode
+    l := len(s)
+    tail.Val = s[l-1]
+    if l == 1 {
+       out = tail
+       return out
+    } else {
+       for i := 2; i <= l; i++ {
+         
+       }
+    }
 }
 
 
-
+//214 -> [4,1,2]
 func adder(s1 []int, s2 []int) []int {
     n1 := toNum(s1)
     n2 := toNum(s2)
@@ -31,7 +41,7 @@ func adder(s1 []int, s2 []int) []int {
     }
 
     if len(out) > 1 {
-        return out[1:] 
+        return out[1:]
     } else {
         return out
     }
