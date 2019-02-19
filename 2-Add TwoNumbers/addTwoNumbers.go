@@ -9,74 +9,36 @@ type ListNode struct {
 	Next *ListNode
 }
 
-
-//this method need to handle over flow issues
+var (
+	s1 = []int{1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5}
+	s2 = []int{6, 7, 8, 6, 7, 8}
+	s3 = []int{8, 9, 9, 9}
+	s4 = []int{2}
+)
 
 func main() {
-	//s1 := []int{2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,9}
-	//s2 := []int{1,2,3,5,6,4,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,9,9,9,9}
-	s1 := []int{1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5}
-	s2 := []int{6,7,8,6,7,8}
-	out := addTwoNumbers(parser(s1), parser(s2))
-	fmt.Println("get:", out)
-}
-
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	var out *ListNode
-	s1 := getdigits(l1)
-	s2 := getdigits(l2)
-	s := adder(s1, s2)
-	out = parser(s)
-	return out
+	out := addTwoNumbers(parser(s3, nil), parser(s4, nil))
+	fmt.Println(revParser(parser(s3, nil)))
+	fmt.Println("get:", revParser(out))
 }
 
 //[2,1,4] to ListNode
-func parser(s []int) *ListNode {
-	var head ListNode
+func parser(s []int, p *ListNode) *ListNode {
 	l := len(s)
-	head.Val = s[l-1]
-	if l <= 1 {
-		return &head
-	} else {
-		for i := 2; i <= l; i++ {
-			tail := head
-			head.Val = s[l-i]
-			head.Next = &tail
-		}
-		return &head
+	if l == 0 || (l == 1 && s[0] == 0) {
+		fmt.Println("invalid slice to convert")
+		return nil
 	}
+
+	if l == 1 {
+		return &ListNode{s[0], p}
+	}
+
+	return &ListNode{s[0], parser(s[1:], p)}
+
 }
 
-//214 -> [4,1,2]
-func adder(s1 []int, s2 []int) []int {
-	n1 := toNum(s1)
-	fmt.Println(n1)
-	n2 := toNum(s2)
-	fmt.Println(n2)
-	n := n1 + n2
-	fmt.Println(n)
-	out := []int{}
-	for n > 0 {
-		out = append(out, n%10)
-		n = n / 10
-	}
-	if len(out) == 0 {
-		out = append(out, 0)
-	}
-	return out
-}
- //overflow
-func toNum(s []int) int {
-	base := 1
-	var sum int
-	for _, v := range s {
-		sum = sum + v*base
-		base = base * 10
-	}
-	return sum
-}
-
-func getdigits(l *ListNode) []int {
+func revParser(l *ListNode) []int {
 	out := []int{}
 	out = append(out, l.Val)
 	temp := l.Next
@@ -85,4 +47,43 @@ func getdigits(l *ListNode) []int {
 		temp = temp.Next
 	}
 	return out
+}
+
+// beats 4.55%
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	return addTwoNumbersAux(l1, l2, 0)
+}
+
+func addTwoNumbersAux(l1 *ListNode, l2 *ListNode, commit int) *ListNode {
+	if l1 == nil && l2 == nil {
+		if commit < 1 {
+			return nil
+		}
+		return &ListNode{1, nil}
+	}
+
+	// if l1 is null node, use l2 as the first parameter
+	if l1 == nil {
+		return addTwoNumbersAux(l2, nil, commit)
+	}
+
+	if l2 == nil {
+		if l1.Val < 10-commit {
+			l1.Val += commit
+			return l1
+		}
+		// l1.Val = 0
+		if l1.Next == nil {
+			return &ListNode{0, &ListNode{1, nil}}
+		}
+
+		fmt.Println(l1)
+		return &ListNode{0, addTwoNumbersAux(l1.Next, nil, 1)}
+	}
+
+	val := l1.Val + l2.Val + commit
+	nextCommit := val / 10
+	fmt.Println(val, nextCommit)
+	return &ListNode{val % 10, addTwoNumbersAux(l1.Next, l2.Next, nextCommit)}
+
 }
