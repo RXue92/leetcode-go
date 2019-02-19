@@ -26,7 +26,9 @@ func betterSolution(nums1, nums2 []int) float64 {
 		return betterSolution(nums2, nums1)
 	}
 
+	// Find i in [0, l1] s.t. i+j=(l1+l2)/2 approximately, nums1[i-1] < nums2[j] and nums2[j-1] < nums1[i]
 	iMin, iMax, j := 0, l1, 0
+	// Start with i=l1/2, decrease or increase i according to following inequations
 	i := (iMin + iMax) / 2
 
 	for iMin <= iMax {
