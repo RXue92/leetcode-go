@@ -1,54 +1,73 @@
-import "strings"
-var interboard = map[int]string {
-	2: "abc",
-	3: "def",
-	4: "ghi",
-	5: "jkll",
-	6: "mno",
-	7: "pqrs",
-	8: "tuv",
-	9: "wxyz",
+/*
+	Memory Usage: 2.7 MB, less than 29.41% of Go online submissions for Letter Combinations of a Phone Number.
+	https://leetcode.com/submissions/detail/221632651/
+ */
+package main
+
+import (
+	"strings"
+	"fmt"
+	"strconv"
+)
+
+
+func main() {
+	digits := "023"
+	out := letterCombinations(digits)
+	fmt.Println(out)
 }
 
-func makeboard() map[int][]string {
-    board := make(map[int][]string)
-	for k, v := range(interboard) {
-		board[k] = strings.Split(v, "")
+func makeBoard() map[string][]string {
+	var oneBoard = map[int]string {
+		2: "abc",
+		3: "def",
+		4: "ghi",
+		5: "jkl",
+		6: "mno",
+		7: "pqrs",
+		8: "tuv",
+		9: "wxyz",
+	}
+
+    board := make(map[string][]string)
+	for k, v := range oneBoard {
+		board[strconv.Itoa(k)] = strings.Split(v, "")
 	}
 
 	return board
 }
 
+var finalBoard = makeBoard()
+
 func letterCombinations(digits string) []string {
-		//out := []string{}
-		board := makeboard()
-		//remove 0,1
-		new_digits := strings.Replace(digits, "0", "", -1)
-		new_digits = strings.Replace(new_digits, "1", "", -1)
-
-		//check if nil
-		if len(new_digits) == 0 {
-			return out
+	var tmp []string
+	//fmt.Println(finalBoard)
+	for i:=0; i<len(digits); i++ {
+		digit := digits[i:i+1]
+		if digit == "0" || digit == "1" {
+			continue
 		}
+		tmp = sliceMultiply(tmp, finalBoard[digit])
+	}
+	return tmp
+}
 
-		//head
-		num_set := strings.Split(new_digits, "")
-		//head := []string{"", "", "", ""}
-		head := board[num_set[0]]
 
-		//multiply
-		if len(num_set) == 1 {
-			return head
+// return all possible combination of strings, and return ss1 if ss2 is empty
+func sliceMultiply(ss1, ss2 []string) (out []string) {
+	if len(ss1) < len(ss2) {
+		return sliceMultiply(ss2, ss1)
+	}
+
+	if len(ss2) == 0 {
+		return ss1
+	}
+
+	for _, c1 := range ss1 {
+		for _, c2 := range ss2 {
+			out = append(out, c1+c2)
 		}
+	}
 
-		for i := 1; i < len(num_set); i++ {
-				tail := board[num_set[i]]
-				for m := 0; m < len(head); m++ {
-					for n := 0; n < len(tail); n++ {
-						head = append(head, head[m] + tail[n])
-						}
-					}
-				head = head[m:]
-		}
-		return head
+	return out
 }
