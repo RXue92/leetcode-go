@@ -17,4 +17,9 @@ func main() {
 		fmt.Println(c)
 		fmt.Println(c=='你')
 	}
+
+	fmt.Println(-1%2==-1, "last")
+
+	s3 := "123"
+	fmt.Println(s3[1:])
 }
