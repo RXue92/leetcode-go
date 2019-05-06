@@ -8,7 +8,11 @@ Leetcode problems written in Go
 
 ## Good solutions
 [55: jump game](https://leetcode.com/articles/jump-game/)
+[75: sort colors](https://leetcode.com/problems/sort-colors/discuss/26481/Python-O(n)-1-pass-in-place-solution-with-explanation)
 
 ## Need Review
 56
 55
+
+## Solution not available if not subscribed
+75
