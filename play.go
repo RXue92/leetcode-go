@@ -85,4 +85,5 @@ func problem3() {
 
 func main() {
 	problem1()
+	fmt.Println((3+4)/2)
 }
