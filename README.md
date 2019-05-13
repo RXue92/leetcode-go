@@ -13,6 +13,7 @@ Leetcode problems written in Go
 ## Need Review
 56
 55
+94(stack)
 
 ## Solution not available if not subscribed
 75
