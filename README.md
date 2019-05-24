@@ -18,3 +18,5 @@ Leetcode problems written in Go
 ## Solution not available if not subscribed
 75
 41
+102
+104

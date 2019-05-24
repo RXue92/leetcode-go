@@ -25,12 +25,9 @@ Iterative solution.
 package problem102
 
 
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+import (
+	. "github.com/rxue92/leetcode-go/helper"
+)
 
 func levelOrder(root *TreeNode) [][]int {
 	if root == nil {
