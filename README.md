@@ -20,3 +20,4 @@ Leetcode problems written in Go
 41
 102
 104
+105
