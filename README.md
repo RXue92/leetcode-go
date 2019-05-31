@@ -15,6 +15,7 @@ Leetcode problems written in Go
 55
 94(stack)
 121
+127
 
 ## Solution not available if not subscribed
 75
