@@ -18,8 +18,9 @@ Leetcode problems written in Go
 127
 
 ## Solution not available if not subscribed
-75
 41
+53
+75
 102
 104
 105
