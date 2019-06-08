@@ -15,10 +15,11 @@ Leetcode problems written in Go
 56
 55
 75
-94(stack)
+94 (stack)
 121
 127
 136
+169 (master theorem in solution #5)
 
 ## Solution not available if not subscribed
 41
